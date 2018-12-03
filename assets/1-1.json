@@ -6,7 +6,7 @@
          "encoding":"base64",
          "height":30,
          "id":1,
-         "name":"world",
+         "name":"Ground layer",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -19,7 +19,7 @@
          "encoding":"base64",
          "height":30,
          "id":3,
-         "name":"kill",
+         "name":"Deadly layer",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -49,9 +49,44 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":6,
+         "name":"Monsters",
+         "objects":[
+                {
+                 "id":5,
+                 "template":"blob.tx",
+                 "x":514.75,
+                 "y":446.25
+                }, 
+                {
+                 "id":12,
+                 "template":"blob.tx",
+                 "x":367.5,
+                 "y":376
+                }, 
+                {
+                 "id":13,
+                 "template":"blob.tx",
+                 "x":424.25,
+                 "y":435
+                }, 
+                {
+                 "id":14,
+                 "template":"blob.tx",
+                 "x":324,
+                 "y":437.25
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":2,
+ "nextlayerid":7,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
@@ -66,7 +101,7 @@
          "margin":0,
          "name":"grassland",
          "spacing":0,
-         "tilecount":24,
+         "tilecount":36,
          "tileheight":16,
          "tiles":[
                 {

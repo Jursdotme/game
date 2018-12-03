@@ -4,18 +4,20 @@ var config = {
     height: 192,
     pixelArt: true,
     plugins: {
-        global: [{
-            key: 'GameScalePlugin',
-            plugin: Phaser.Plugins.GameScalePlugin,
-            mapping: 'gameScale',
-            data: {
-                minWidth: 400,
-                minHeight: 300,
-                maxWidth: 1600,
-                maxHeight: 1200,
-                snap: 0
+        global: [
+            {
+                key: "GameScalePlugin",
+                plugin: Phaser.Plugins.GameScalePlugin,
+                mapping: "gameScale",
+                data: {
+                    minWidth: 400,
+                    minHeight: 300,
+                    maxWidth: 1600,
+                    maxHeight: 1200,
+                    snap: 0
+                }
             }
-        }]
+        ]
     },
     physics: {
         default: "arcade",
@@ -61,21 +63,28 @@ function preload() {
         frameWidth: 16,
         frameHeight: 16
     })
-    this.load.spritesheet("deadly", "assets/deadly.png", {
-        frameWidth: 16,
-        frameHeight: 16
-    })
 
-    // player animations
+    // player spritesheet
     this.load.spritesheet("player", "assets/dude.png", {
         frameWidth: 11,
         frameHeight: 25
     })
 
+    // player spritesheet
+    this.load.spritesheet("monster", "assets/monster.png", {
+        frameWidth: 16,
+        frameHeight: 16
+    })
+
     this.load.image("pressstart", "assets/Hoshi.png")
 }
 
+function touchMonster(player, monster) {
+    this.isPlayerDead = true
+}
+
 function create() {
+    this.isPlayerDead = false
     // load the map
     map = this.make.tilemap({
         key: "map"
@@ -85,8 +94,8 @@ function create() {
     var groundTiles = map.addTilesetImage("grassland")
 
     // create the ground layer
-    groundLayer = map.createDynamicLayer("world", groundTiles, 0, 0)
-    killLayer = map.createDynamicLayer("kill", groundTiles, 0, 0)
+    groundLayer = map.createDynamicLayer("Ground layer", groundTiles, 0, 0)
+    deadlyLayer = map.createDynamicLayer("Deadly layer", groundTiles, 0, 0)
 
     // the player will collide with this layer
     groundLayer.setCollisionByProperty({
@@ -104,7 +113,9 @@ function create() {
     //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     // })
 
-    //  So we can see how much health we have left
+    /**
+     * Health bar
+     */
     var font_config = {
         image: "pressstart",
         width: 8,
@@ -123,6 +134,9 @@ function create() {
     )
     text = this.add.bitmapText(10, 10, "pressstart", "LIVES").setScrollFactor(0)
 
+    /**
+     * Create Player
+     */
     // create the player sprite at the spawnpoint
     const spawnPoint = map.findObject(
         "Objects",
@@ -135,6 +149,21 @@ function create() {
 
     // Make player collide with the world
     this.physics.add.collider(groundLayer, player)
+
+    /**
+     * CREATE MONSTER
+     */
+
+    bombs = this.physics.add.group()
+    monster = this.physics.add.sprite(500, 430, "monster")
+
+    this.physics.add.collider(groundLayer, monster)
+
+    this.physics.add.collider(player, monster, touchMonster, null, this)
+
+    monster.setBounceX(1)
+    monster.setCollideWorldBounds(true)
+    monster.body.velocity.x = 40
 
     /**
      * CONTROLS
@@ -187,13 +216,27 @@ function create() {
         frameRate: 12,
         repeat: 0
     })
+
+    this.anims.create({
+        key: "walk_monster",
+        frames: this.anims.generateFrameNumbers("monster", {
+            start: 0,
+            end: 7
+        }),
+        frameRate: 12,
+        repeat: -1
+    })
 }
 
-function update() {
-    if (lives == 0) {
-        return
-    }
+function update(time, delta) {
+    /**
+     * MONSTER
+     */
+    monster.anims.play("walk_monster", true) // play walk animation
 
+    /**
+     * PLAYER CONTROLS
+     */
     if (cursors.left.isDown) {
         // if the left arrow key is down
         player.body.setVelocityX(-80) // move left
@@ -225,5 +268,32 @@ function update() {
 
     if (cursors.up.isUp) {
         flipFlop = false
+    }
+
+    /**
+     * DEATH
+     */
+
+    if (
+        player.y + player.height > groundLayer.height ||
+        this.physics.world.overlap(player, this.lava)
+    ) {
+        // Flag that the player is dead so that we can stop update from running in the future
+        this.isPlayerDead = true
+    }
+
+    if (this.isPlayerDead == true) {
+        console.log("Game Over")
+        const cam = this.cameras.main
+        cam.shake(100, 0.05)
+        cam.fade(250, 0, 0, 0)
+
+        cam.once("camerafadeoutcomplete", () => {
+            // this.player.destroy()
+            this.scene.restart()
+            this.player.anims.play("idle", true)
+        })
+
+        player.body.moves = false
     }
 }
