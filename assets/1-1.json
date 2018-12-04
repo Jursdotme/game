@@ -56,28 +56,28 @@
          "name":"Monsters",
          "objects":[
                 {
-                 "id":5,
-                 "template":"blob.tx",
-                 "x":514.75,
-                 "y":446.25
+                 "gid":25,
+                 "height":16,
+                 "id":20,
+                 "name":"blob",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":204.349956688529,
+                 "y":415.375324836035
                 }, 
                 {
-                 "id":12,
-                 "template":"blob.tx",
-                 "x":367.5,
-                 "y":376
-                }, 
-                {
-                 "id":13,
-                 "template":"blob.tx",
-                 "x":424.25,
-                 "y":435
-                }, 
-                {
-                 "id":14,
-                 "template":"blob.tx",
-                 "x":324,
-                 "y":437.25
+                 "gid":25,
+                 "height":16,
+                 "id":21,
+                 "name":"blob",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":209.052345006806,
+                 "y":445.817101843831
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -86,7 +86,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":15,
+ "nextobjectid":22,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
@@ -101,7 +101,7 @@
          "margin":0,
          "name":"grassland",
          "spacing":0,
-         "tilecount":36,
+         "tilecount":24,
          "tileheight":16,
          "tiles":[
                 {
@@ -320,6 +320,19 @@
                          "value":false
                         }]
                 }],
+         "tilewidth":16
+        }, 
+        {
+         "columns":8,
+         "firstgid":25,
+         "image":"monster.png",
+         "imageheight":16,
+         "imagewidth":128,
+         "margin":0,
+         "name":"enemies",
+         "spacing":0,
+         "tilecount":8,
+         "tileheight":16,
          "tilewidth":16
         }],
  "tilewidth":16,

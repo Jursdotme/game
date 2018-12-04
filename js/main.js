@@ -34,77 +34,77 @@ var config = {
         create: create,
         update: update
     }
-}
+};
 
-var game = new Phaser.Game(config)
+var game = new Phaser.Game(config);
 
-var map
-var player
-var cursors
-var groundLayer
-var killLayer
-var lives = 3
-var text
+var map;
+var player;
+var cursors;
+var groundLayer;
+var killLayer;
+var lives = 3;
+var text;
 
 function removeLife() {
-    lives--
+    lives--;
 
     if (currentHealth === 0) {
         //  Uh oh, we're dead
-        sprite.player.reset(400, 300)
+        sprite.player.reset(400, 300);
     }
 }
 
 function preload() {
     // map made with Tiled in JSON format
-    this.load.tilemapTiledJSON("map", "assets/1-1.json")
+    this.load.tilemapTiledJSON("map", "assets/1-1.json");
     // tiles in spritesheet
     this.load.spritesheet("grassland", "assets/grassland.png", {
         frameWidth: 16,
         frameHeight: 16
-    })
+    });
 
     // player spritesheet
     this.load.spritesheet("player", "assets/dude.png", {
         frameWidth: 11,
         frameHeight: 25
-    })
+    });
 
     // player spritesheet
     this.load.spritesheet("monster", "assets/monster.png", {
         frameWidth: 16,
         frameHeight: 16
-    })
+    });
 
-    this.load.image("pressstart", "assets/Hoshi.png")
+    this.load.image("pressstart", "assets/Hoshi.png");
 }
 
 function touchMonster(player, monster) {
-    this.isPlayerDead = true
+    this.isPlayerDead = true;
 }
 
 function create() {
-    this.isPlayerDead = false
+    this.isPlayerDead = false;
     // load the map
     map = this.make.tilemap({
         key: "map"
-    })
+    });
 
     // tiles for the ground layer
-    var groundTiles = map.addTilesetImage("grassland")
+    var groundTiles = map.addTilesetImage("grassland");
 
     // create the ground layer
-    groundLayer = map.createDynamicLayer("Ground layer", groundTiles, 0, 0)
-    deadlyLayer = map.createDynamicLayer("Deadly layer", groundTiles, 0, 0)
+    groundLayer = map.createDynamicLayer("Ground layer", groundTiles, 0, 0);
+    deadlyLayer = map.createDynamicLayer("Deadly layer", groundTiles, 0, 0);
 
     // the player will collide with this layer
     groundLayer.setCollisionByProperty({
         collides: true
-    })
+    });
 
     // set the boundaries of our game world
-    this.physics.world.bounds.width = groundLayer.width
-    this.physics.world.bounds.height = groundLayer.height
+    this.physics.world.bounds.width = groundLayer.width;
+    this.physics.world.bounds.height = groundLayer.height;
 
     // const debugGraphics = this.add.graphics().setAlpha(0.75)
     // groundLayer.renderDebug(debugGraphics, {
@@ -126,13 +126,15 @@ function create() {
             x: 1,
             y: 1
         }
-    }
+    };
 
     this.cache.bitmapFont.add(
         "pressstart",
         Phaser.GameObjects.RetroFont.Parse(this, font_config)
-    )
-    text = this.add.bitmapText(10, 10, "pressstart", "LIVES").setScrollFactor(0)
+    );
+    text = this.add
+        .bitmapText(10, 10, "pressstart", "LIVES")
+        .setScrollFactor(0);
 
     /**
      * Create Player
@@ -141,46 +143,31 @@ function create() {
     const spawnPoint = map.findObject(
         "Objects",
         obj => obj.name === "Spawn Point"
-    )
-    player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "player")
+    );
+    player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "player");
 
-    player.setBounce(0.15) // our player will bounce from items
-    player.setCollideWorldBounds(true) // don't go out of the map
+    player.setBounce(0.15); // our player will bounce from items
+    player.setCollideWorldBounds(true); // don't go out of the map
 
     // Make player collide with the world
-    this.physics.add.collider(groundLayer, player)
-
-    /**
-     * CREATE MONSTER
-     */
-
-    bombs = this.physics.add.group()
-    monster = this.physics.add.sprite(500, 430, "monster")
-
-    this.physics.add.collider(groundLayer, monster)
-
-    this.physics.add.collider(player, monster, touchMonster, null, this)
-
-    monster.setBounceX(1)
-    monster.setCollideWorldBounds(true)
-    monster.body.velocity.x = 40
+    this.physics.add.collider(groundLayer, player);
 
     /**
      * CONTROLS
      */
     // Add arrowkeys
-    cursors = this.input.keyboard.createCursorKeys()
+    cursors = this.input.keyboard.createCursorKeys();
 
     /**
      * CAMERA
      */
     // set bounds so the camera won't go outside the game world¨
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels)
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     // make the camera follow the player
-    this.cameras.main.startFollow(player)
+    this.cameras.main.startFollow(player);
 
     // set background color, so the sky is not black
-    this.cameras.main.setBackgroundColor("#1b2335")
+    this.cameras.main.setBackgroundColor("#1b2335");
 
     /**
      * ANIMATIONS
@@ -195,7 +182,7 @@ function create() {
         }),
         frameRate: 20,
         repeat: -1
-    })
+    });
 
     this.anims.create({
         key: "idle",
@@ -205,7 +192,7 @@ function create() {
         }),
         frameRate: 12,
         repeat: -1
-    })
+    });
 
     this.anims.create({
         key: "jumping",
@@ -215,7 +202,7 @@ function create() {
         }),
         frameRate: 12,
         repeat: 0
-    })
+    });
 
     this.anims.create({
         key: "walk_monster",
@@ -225,49 +212,80 @@ function create() {
         }),
         frameRate: 12,
         repeat: -1
-    })
+    });
+
+    /**
+     * CREATE MONSTER
+     */
+
+    monsters = this.add.group();
+    monsters.enableBody = true;
+    map.createFromObjects(
+        "Monsters",
+        "blob",
+        { key: "monster" },
+        0,
+        true,
+        false,
+        monsters
+    );
+
+    monsters.forEach(function(enemy) {
+        enemy.setBounceX(1);
+        enemy.setCollideWorldBounds(true);
+        enemy.body.velocity.x = 40;
+    }, this);
+
+    // this.physics.add.collider(groundLayer, monsters);
+
+    // this.physics.add.collider(player, monsters, touchMonster, null, this);
+    // monsters.children.each(function(enemy) {
+    //     enemy.setBounceX(1);
+    //     enemy.setCollideWorldBounds(true);
+    //     enemy.body.velocity.x = 40;
+    // }, this);
 }
 
 function update(time, delta) {
     /**
      * MONSTER
      */
-    monster.anims.play("walk_monster", true) // play walk animation
+    //monster.anims.play("walk_monster", true) // play walk animation
 
     /**
      * PLAYER CONTROLS
      */
     if (cursors.left.isDown) {
         // if the left arrow key is down
-        player.body.setVelocityX(-80) // move left
+        player.body.setVelocityX(-80); // move left
         if (player.body.onFloor()) {
-            player.anims.play("walk", true) // play walk animation
-            player.flipX = true // flip the sprite to the left
-            direction = -1
+            player.anims.play("walk", true); // play walk animation
+            player.flipX = true; // flip the sprite to the left
+            direction = -1;
         }
     } else if (cursors.right.isDown) {
         // if the right arrow key is down
-        player.body.setVelocityX(80) // move right
+        player.body.setVelocityX(80); // move right
         if (player.body.onFloor()) {
-            player.anims.play("walk", true) // play walk animation
-            player.flipX = false // use the original sprite looking to the right
-            direction = 1
+            player.anims.play("walk", true); // play walk animation
+            player.flipX = false; // use the original sprite looking to the right
+            direction = 1;
         }
     } else if (player.body.onFloor()) {
-        player.body.setVelocityX(0)
-        player.anims.play("idle", true)
+        player.body.setVelocityX(0);
+        player.anims.play("idle", true);
     }
 
     if (cursors.up.isDown && player.body.onFloor()) {
         if (!flipFlop) {
-            player.body.setVelocityY(-260) // jump up
-            flipFlop = true
-            player.anims.play("jumping", false)
+            player.body.setVelocityY(-260); // jump up
+            flipFlop = true;
+            player.anims.play("jumping", false);
         }
     }
 
     if (cursors.up.isUp) {
-        flipFlop = false
+        flipFlop = false;
     }
 
     /**
@@ -279,21 +297,21 @@ function update(time, delta) {
         this.physics.world.overlap(player, this.lava)
     ) {
         // Flag that the player is dead so that we can stop update from running in the future
-        this.isPlayerDead = true
+        this.isPlayerDead = true;
     }
 
     if (this.isPlayerDead == true) {
-        console.log("Game Over")
-        const cam = this.cameras.main
-        cam.shake(100, 0.05)
-        cam.fade(250, 0, 0, 0)
+        console.log("Game Over");
+        const cam = this.cameras.main;
+        cam.shake(100, 0.05);
+        cam.fade(250, 0, 0, 0);
 
         cam.once("camerafadeoutcomplete", () => {
             // this.player.destroy()
-            this.scene.restart()
-            this.player.anims.play("idle", true)
-        })
+            this.scene.restart();
+            this.player.anims.play("idle", true);
+        });
 
-        player.body.moves = false
+        player.body.moves = false;
     }
 }
