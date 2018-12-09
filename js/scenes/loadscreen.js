@@ -6,7 +6,7 @@ class loadscreen extends Phaser.Scene {
 	init(data) {}
 	preload() {
 		// map made with Tiled in JSON format
-		this.load.tilemapTiledJSON("l1w1", "assets/1-1.json");
+		this.load.tilemapTiledJSON("l1w1", "assets/l1w1.json");
 		// tiles in spritesheet
 		this.load.spritesheet("grassland", "assets/grassland.png", {
 			frameWidth: 16,
