@@ -16,11 +16,19 @@ class l1w1 extends Phaser.Scene {
 
 		// tiles for the ground layer
 		var groundTiles = map.addTilesetImage("grassland");
+		var backgroundTiles = map.addTilesetImage("background");
 
 		// create the ground layer
 		this.groundLayer = map.createDynamicLayer(
 			"Ground Layer",
 			groundTiles,
+			0,
+			0
+		);
+		// create the ground layer
+		this.backgroundLayer = map.createDynamicLayer(
+			"Background Layer",
+			backgroundTiles,
 			0,
 			0
 		);
