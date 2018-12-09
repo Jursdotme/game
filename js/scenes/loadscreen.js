@@ -12,6 +12,10 @@ class loadscreen extends Phaser.Scene {
 			frameWidth: 16,
 			frameHeight: 16
 		});
+		this.load.spritesheet("background", "assets/background.png", {
+			frameWidth: 16,
+			frameHeight: 16
+		});
 
 		// player spritesheet
 		this.load.spritesheet("player", "assets/dude.png", {
@@ -44,9 +48,4 @@ class loadscreen extends Phaser.Scene {
 		this.scene.start("MainMenu");
 	}
 	update(time, delta) {}
-
-	// this.killpayer = function() {
-	// 	this.isPlayerDead = true;
-	// 	console.log("Monster touched");
-	// }
 }
