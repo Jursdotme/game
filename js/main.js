@@ -2,7 +2,7 @@ var config = {
 	type: Phaser.AUTO,
 	width: 256,
 	height: 192,
-	pixelArt: true,
+	antialias: false,
 	plugins: {
 		global: [
 			{
@@ -68,7 +68,9 @@ function preload() {
 	// player spritesheet
 	this.load.spritesheet("player", "assets/dude.png", {
 		frameWidth: 11,
-		frameHeight: 25
+		frameHeight: 25,
+		spacing: 1,
+		margin: 1
 	});
 
 	// player spritesheet
