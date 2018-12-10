@@ -12,11 +12,18 @@ class loadscreen extends Phaser.Scene {
 			frameWidth: 16,
 			frameHeight: 16
 		});
+		// Load Background art
 		this.load.spritesheet("background", "assets/background.png", {
 			frameWidth: 16,
 			frameHeight: 16
 		});
-
+		// Load Projectiles
+		this.load.spritesheet("projectiles", "assets/projectiles.png", {
+			frameWidth: 11,
+			frameHeight: 25,
+			spacing: 1,
+			margin: 1
+		});
 		// player spritesheet
 		this.load.spritesheet("player", "assets/dude.png", {
 			frameWidth: 11,
