@@ -4,19 +4,18 @@ class l1w1 extends Phaser.Scene {
 	}
 
 	init(data) {}
-
 	preload() {}
 	create(data) {
 		this.isPlayerDead = false;
 
 		// load the map
-		let map = this.make.tilemap({
+		const map = this.make.tilemap({
 			key: "l1w1"
 		});
 
 		// tiles for the ground layer
-		var groundTiles = map.addTilesetImage("grassland");
-		var backgroundTiles = map.addTilesetImage("background");
+		const groundTiles = map.addTilesetImage("grassland");
+		const backgroundTiles = map.addTilesetImage("background");
 
 		// create the ground layer
 		this.groundLayer = map.createDynamicLayer(
@@ -32,7 +31,7 @@ class l1w1 extends Phaser.Scene {
 			0,
 			0
 		);
-		let deadlyLayer = map.createDynamicLayer(
+		const deadlyLayer = map.createDynamicLayer(
 			"Deadly Layer",
 			groundTiles,
 			0,
@@ -221,13 +220,12 @@ class l1w1 extends Phaser.Scene {
 
 		if (this.isPlayerDead == true) {
 			const cam = this.cameras.main;
-			cam.shake(100, 0.05);
+			cam.shake(25, 0.02);
 			cam.fade(250, 0, 0, 0);
-
 			cam.once("camerafadeoutcomplete", () => {
-				// this.player.destroy()
+				this.player.destroy();
 				this.scene.restart();
-				this.player.anims.play("idle", true);
+				//this.player.anims.play("idle", true);
 			});
 
 			this.player.body.moves = false;
