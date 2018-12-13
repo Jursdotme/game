@@ -1,5 +1,5 @@
 /* globals Phaser */
-class l1w1 extends Phaser.Scene {
+class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
   constructor() {
     super({ key: 'l1w1' });
   }
@@ -27,6 +27,7 @@ class l1w1 extends Phaser.Scene {
       0,
       0,
     );
+
     // create the ground layer
     this.backgroundLayer = map.createDynamicLayer(
       'Background Layer',
@@ -77,6 +78,7 @@ class l1w1 extends Phaser.Scene {
      */
     // set bounds so the camera won't go outside the game world¨
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
     // make the camera follow the player
     this.cameras.main.startFollow(this.player);
 
@@ -220,6 +222,7 @@ class l1w1 extends Phaser.Scene {
       cam.once('camerafadeoutcomplete', () => {
         this.player.destroy();
         this.scene.restart();
+
         // this.player.anims.play("idle", true);
       });
 

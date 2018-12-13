@@ -1,25 +1,27 @@
 /* globals Phaser */
-class loadscreen extends Phaser.Scene {
-  // eslint-disable no-unused-vars
+class loadscreen extends Phaser.Scene { // eslint-disable-line no-unused-vars
   constructor() {
     super({ key: 'loadscreen' });
   }
 
-  init() {}
+  init() { }
 
   preload() {
     // map made with Tiled in JSON format
     this.load.tilemapTiledJSON('l1w1', 'assets/l1w1.json');
+
     // tiles in spritesheet
     this.load.spritesheet('grassland', 'assets/grassland.png', {
       frameWidth: 16,
       frameHeight: 16,
     });
+
     // Load Background art
     this.load.spritesheet('background', 'assets/background.png', {
       frameWidth: 16,
       frameHeight: 16,
     });
+
     // Load Projectiles
     this.load.spritesheet('projectiles', 'assets/projectiles.png', {
       frameWidth: 11,
@@ -27,6 +29,7 @@ class loadscreen extends Phaser.Scene {
       spacing: 1,
       margin: 1,
     });
+
     // player spritesheet
     this.load.spritesheet('player', 'assets/dude.png', {
       frameWidth: 11,
@@ -59,5 +62,5 @@ class loadscreen extends Phaser.Scene {
     this.scene.start('MainMenu');
   }
 
-  update() {}
+  update() { }
 }

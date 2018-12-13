@@ -1,5 +1,5 @@
 /* globals Phaser WebFont */
-class MainMenu extends Phaser.Scene {
+class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
   constructor() {
     super({ key: 'MainMenu' });
   }
@@ -49,5 +49,5 @@ class MainMenu extends Phaser.Scene {
     );
   }
 
-  update() {}
+  update() { }
 }
