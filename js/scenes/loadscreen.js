@@ -1,9 +1,11 @@
+/* globals Phaser */
 class loadscreen extends Phaser.Scene {
-  constructor(config) {
+  // eslint-disable no-unused-vars
+  constructor() {
     super({ key: 'loadscreen' });
   }
 
-  init(data) {}
+  init() {}
 
   preload() {
     // map made with Tiled in JSON format
@@ -11,51 +13,51 @@ class loadscreen extends Phaser.Scene {
     // tiles in spritesheet
     this.load.spritesheet('grassland', 'assets/grassland.png', {
       frameWidth: 16,
-      frameHeight: 16
+      frameHeight: 16,
     });
     // Load Background art
     this.load.spritesheet('background', 'assets/background.png', {
       frameWidth: 16,
-      frameHeight: 16
+      frameHeight: 16,
     });
     // Load Projectiles
     this.load.spritesheet('projectiles', 'assets/projectiles.png', {
       frameWidth: 11,
       frameHeight: 25,
       spacing: 1,
-      margin: 1
+      margin: 1,
     });
     // player spritesheet
     this.load.spritesheet('player', 'assets/dude.png', {
       frameWidth: 11,
       frameHeight: 25,
       spacing: 1,
-      margin: 1
+      margin: 1,
     });
 
     // player spritesheet
     this.load.spritesheet('monster', 'assets/monster.png', {
       frameWidth: 16,
-      frameHeight: 16
+      frameHeight: 16,
     });
 
     // hud spritesheet
     this.load.spritesheet('hud', 'assets/hud.png', {
       frameWidth: 16,
-      frameHeight: 16
+      frameHeight: 16,
     });
 
     this.load.image('mainlogo', 'assets/full-logo.png');
 
     this.load.script(
       'webfont',
-      'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js'
+      'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
     );
   }
 
-  create(data) {
+  create() {
     this.scene.start('MainMenu');
   }
 
-  update(time, delta) {}
+  update() {}
 }

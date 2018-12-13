@@ -1,5 +1,6 @@
+/* globals Phaser */
 class l1w1 extends Phaser.Scene {
-  constructor(config) {
+  constructor() {
     super({ key: 'l1w1' });
   }
 
@@ -7,12 +8,12 @@ class l1w1 extends Phaser.Scene {
 
   // preload() {}
 
-  create(data) {
+  create() {
     this.isPlayerDead = false;
 
     // load the map
     const map = this.make.tilemap({
-      key: 'l1w1'
+      key: 'l1w1',
     });
 
     // tiles for the ground layer
@@ -24,25 +25,25 @@ class l1w1 extends Phaser.Scene {
       'Ground Layer',
       groundTiles,
       0,
-      0
+      0,
     );
     // create the ground layer
     this.backgroundLayer = map.createDynamicLayer(
       'Background Layer',
       backgroundTiles,
       0,
-      0
+      0,
     );
     const deadlyLayer = map.createDynamicLayer(
       'Deadly Layer',
       groundTiles,
       0,
-      0
+      0,
     );
 
     // the player will collide with this layer
     this.groundLayer.setCollisionByProperty({
-      collides: true
+      collides: true,
     });
 
     // set the boundaries of our game world
@@ -55,7 +56,7 @@ class l1w1 extends Phaser.Scene {
     // create the player sprite at the spawnpoint
     const spawnPoint = map.findObject(
       'Objects',
-      obj => obj.name === 'Spawn Point'
+      obj => obj.name === 'Spawn Point',
     );
     this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player');
 
@@ -91,40 +92,40 @@ class l1w1 extends Phaser.Scene {
       key: 'walk',
       frames: this.anims.generateFrameNumbers('player', {
         start: 0,
-        end: 7
+        end: 7,
       }),
       frameRate: 20,
-      repeat: -1
+      repeat: -1,
     });
 
     this.anims.create({
       key: 'idle',
       frames: this.anims.generateFrameNumbers('player', {
         start: 8,
-        end: 8
+        end: 8,
       }),
       frameRate: 12,
-      repeat: -1
+      repeat: -1,
     });
 
     this.anims.create({
       key: 'jumping',
       frames: this.anims.generateFrameNumbers('player', {
         start: 9,
-        end: 12
+        end: 12,
       }),
       frameRate: 12,
-      repeat: 0
+      repeat: 0,
     });
 
     this.anims.create({
       key: 'walk_monster',
       frames: this.anims.generateFrameNumbers('monster', {
         start: 0,
-        end: 7
+        end: 7,
       }),
       frameRate: 12,
-      repeat: -1
+      repeat: -1,
     });
 
     /**
@@ -134,7 +135,7 @@ class l1w1 extends Phaser.Scene {
     this.monsters = this.physics.add.group();
 
     this.monsters.addMultiple(
-      map.createFromObjects('Monsters', 'blob', { key: 'monster' })
+      map.createFromObjects('Monsters', 'blob', { key: 'monster' }),
     );
     this.monsters.getChildren().forEach((enemy) => {
       // You need to use the `body` methods because these are Sprites (not ArcadeSprites)
@@ -147,7 +148,7 @@ class l1w1 extends Phaser.Scene {
     this.physics.add.collider(this.groundLayer, this.monsters);
   }
 
-  update(time, delta) {
+  update() {
     /**
      * PLAYER CONTROLS
      */
@@ -194,7 +195,7 @@ class l1w1 extends Phaser.Scene {
           this.player.x,
           this.player.y,
           enemy.x,
-          enemy.y
+          enemy.y,
         ) < 150
         && enemy.body.velocity.x === 0
       ) {
