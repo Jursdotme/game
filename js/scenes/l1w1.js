@@ -206,7 +206,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
      * Create bullets
      */
     this.bullets = this.physics.add.group({ allowGravity: false });
-    this.bullets.maxSize = -1;
+    this.bullets.maxSize = 3;
 
     /**
      * CONTROLS
