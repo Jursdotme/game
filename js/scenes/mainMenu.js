@@ -49,9 +49,19 @@ class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.parallax3 = this.add.tileSprite(128, 96, 256, 256, 'parallax', 2);
     this.parallax3.setScrollFactor(0.4, 0.4);
     this.parallax3.setDepth(-3);
+    const tween = this.tweens.addCounter({
+      from: 1,
+      to: 2,
+      duration: 5000,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1,
+    });
   }
 
   update() {
-    this.parallax1;
+    this.parallax1.tilePositionX = this.parallax1.tilePositionX + 0.6;
+    this.parallax2.tilePositionX = this.parallax2.tilePositionX + 0.4;
+    this.parallax3.tilePositionX = this.parallax3.tilePositionX + 0.2;
   }
 }
