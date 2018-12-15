@@ -84,9 +84,36 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.isPlayerDead = true;
   }
 
-  killMonster() {
-    console.log('monster is hit');
+  damageEnemy(bullet, enemy) {
+    enemy.setTintFill('0xffffff');
+    enemy.health--;
+    if (enemy.health < 1) {
+      this.enemies.remove(enemy, false, true);
+      enemy.destroy(); // Remove forever
+    }
+
+    bullet.setActive(false).setVisible(false); // Put back in pool
+    bullet.y = -200;
   }
+
+  killEnemy(bullet, enemy) {
+    console.log(enemy);
+    this.enemies.remove(enemy, false, true);
+    enemy.destroy(); // Remove forever
+    bullet.setActive(false).setVisible(false); // Put back in pool
+    bullet.y = -200;
+  }
+
+  isEnemyDead(enemy) {
+    if (enemy.active === true) {
+      console.log('Enemy is alive');
+      return true;
+    }
+    console.log('Enemy is dead');
+    return false;
+  }
+
+  //     this.physics.add.overlap(this.bullets, this.enemies, this.killEnemy, null, this);
 
 
   create() {
@@ -161,18 +188,18 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
      * CREATE MONSTER
      */
 
-    this.monsters = this.physics.add.group();
+    this.enemies = this.physics.add.group();
 
-    this.monsters.addMultiple(
-      map.createFromObjects('Monsters', 'blob', { key: 'monster' }),
+    this.enemies.addMultiple(
+      map.createFromObjects('Enemies', 'blob', { key: 'monster' }),
     );
-    this.monsters.getChildren().forEach((enemy) => {
+    this.enemies.getChildren().forEach((enemy) => {
       // You need to use the `body` methods because these are Sprites (not ArcadeSprites)
-
       enemy.body.setBounceX(1);
       enemy.body.setCollideWorldBounds(true);
       enemy.body.velocity.x = 0;
       enemy.anims.play('walk_monster', true);
+      enemy.health = 3;
     }, this);
 
     /**
@@ -210,16 +237,16 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.physics.add.collider(this.groundLayer, this.bullets);
 
     // Make monsters collide with world
-    this.physics.add.collider(this.groundLayer, this.monsters);
+    this.physics.add.collider(this.groundLayer, this.enemies);
 
     // Check overlap with Deadly tiles
     this.physics.add.overlap(this.player, this.foreground);
 
     // check overlap with monsters
-    this.physics.add.overlap(this.player, this.monsters, this.killPlayer, null, this);
+    this.physics.add.overlap(this.player, this.enemies, this.killPlayer, this.isEnemyDead, this);
 
     // Shoot monster
-    this.physics.add.overlap(this.bullets, this.monsters, this.killMonster, null, this);
+    this.physics.add.overlap(this.bullets, this.enemies, this.damageEnemy, null, this);
 
 
     /**
@@ -238,7 +265,6 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.parallax3 = this.add.tileSprite(0, 128, map.widthInPixels * 1.4, map.heightInPixels, 'parallax', 2);
     this.parallax3.setScrollFactor(0.4, 0.4);
     this.parallax3.setDepth(-3);
-    console.log(map);
   }
 
   shootBullet() {
@@ -304,7 +330,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
      * Monster activation
      */
 
-    this.monsters.getChildren().forEach(function (enemy) {
+    this.enemies.getChildren().forEach(function (enemy) {
       if (
         Phaser.Math.Distance.Between(
           this.player.x,
@@ -333,6 +359,8 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
         || bullet.body.velocity.x === 0
       ) {
         bullet.setActive(false).setVisible(false);
+        bullet.x = -64;
+        bullet.y = -64;
 
         // console.log(bullet);
       }

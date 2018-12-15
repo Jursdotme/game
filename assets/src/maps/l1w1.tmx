@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="200" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="24">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="200" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="40">
  <tileset firstgid="1" name="grassland" tilewidth="16" tileheight="16" tilecount="30" columns="6">
   <image source="../../grassland.png" width="96" height="80"/>
   <tile id="0">
@@ -209,6 +209,11 @@
  </tileset>
  <tileset firstgid="31" name="enemies" tilewidth="16" tileheight="16" tilecount="8" columns="8">
   <image source="../../monster.png" width="128" height="16"/>
+  <tile id="0">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </tile>
  </tileset>
  <layer id="7" name="Ground Layer" width="200" height="16">
   <data encoding="base64">
@@ -230,9 +235,101 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="6" name="Monsters">
-  <object id="20" name="blob" gid="31" x="501.806" y="213.694" width="16" height="16"/>
-  <object id="21" name="blob" gid="31" x="535.754" y="211.812" width="16" height="16"/>
-  <object id="23" name="blob" gid="31" x="225.963" y="222.885" width="16" height="16"/>
+ <objectgroup id="6" name="Enemies">
+  <object id="20" name="blob" gid="31" x="501.806" y="213.694" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="21" name="blob" gid="31" x="535.754" y="211.812" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="23" name="blob" gid="31" x="388.947" y="156.81" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="24" name="blob" gid="31" x="269.513" y="207.843" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="25" name="blob" gid="31" x="378.903" y="199.767" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="26" name="blob" gid="31" x="761.4" y="149.845" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="27" name="blob" gid="31" x="722.49" y="221.058" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="28" name="blob" gid="31" x="936.865" y="154.249" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="29" name="blob" gid="31" x="892.081" y="215.185" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="30" name="blob" gid="31" x="795.906" y="219.59" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="31" name="blob" gid="31" x="1259.9" y="157.186" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="32" name="blob" gid="31" x="1358.27" y="224.729" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="33" name="blob" gid="31" x="1408.2" y="78.6309" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="34" name="blob" gid="31" x="1613.03" y="215.185" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="35" name="blob" gid="31" x="1969.09" y="32.3788" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="36" name="blob" gid="31" x="1768.67" y="210.78" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="37" name="blob" gid="31" x="1920.64" y="28.708" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="38" name="blob" gid="31" x="2002.87" y="22.8347" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="39" name="blob" gid="31" x="2042.51" y="25.0372" width="16" height="16">
+   <properties>
+    <property name="health" type="int" value="3"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

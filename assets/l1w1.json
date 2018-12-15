@@ -66,13 +66,19 @@
         {
          "draworder":"topdown",
          "id":6,
-         "name":"Monsters",
+         "name":"Enemies",
          "objects":[
                 {
                  "gid":31,
                  "height":16,
                  "id":20,
                  "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -85,6 +91,12 @@
                  "height":16,
                  "id":21,
                  "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -97,12 +109,306 @@
                  "height":16,
                  "id":23,
                  "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":225.963135413861,
-                 "y":222.884673105784
+                 "x":388.947,
+                 "y":156.81
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":24,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":269.513,
+                 "y":207.843
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":25,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":378.903,
+                 "y":199.767
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":26,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":761.4,
+                 "y":149.845
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":27,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":722.49,
+                 "y":221.058
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":28,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":936.865,
+                 "y":154.249
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":29,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":892.081,
+                 "y":215.185
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":30,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":795.906,
+                 "y":219.59
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":31,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1259.9,
+                 "y":157.186
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":32,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1358.27,
+                 "y":224.729
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":33,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1408.2,
+                 "y":78.6309
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":34,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1613.03,
+                 "y":215.185
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":35,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1969.09,
+                 "y":32.3788
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":36,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1768.67,
+                 "y":210.78
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":37,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1920.64,
+                 "y":28.708
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":38,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2002.87,
+                 "y":22.8347
+                }, 
+                {
+                 "gid":31,
+                 "height":16,
+                 "id":39,
+                 "name":"blob",
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2042.51,
+                 "y":25.0372
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -111,7 +417,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":24,
+ "nextobjectid":40,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
@@ -682,6 +988,16 @@
          "spacing":0,
          "tilecount":8,
          "tileheight":16,
+         "tiles":[
+                {
+                 "id":0,
+                 "properties":[
+                        {
+                         "name":"health",
+                         "type":"int",
+                         "value":3
+                        }]
+                }],
          "tilewidth":16
         }],
  "tilewidth":16,
