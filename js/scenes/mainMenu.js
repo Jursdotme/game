@@ -38,15 +38,15 @@ class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
     );
 
     this.cameras.main.setBackgroundColor('#373f7b');
-    this.parallax1 = this.add.tileSprite(128, 128, 256, 256, 'parallax', 0);
+    this.parallax1 = this.add.tileSprite(128, 96, 256, 256, 'parallax', 0);
     this.parallax1.setScrollFactor(0.8, 0.8);
     this.parallax1.setDepth(-1);
 
-    this.parallax2 = this.add.tileSprite(128, 128, 256, 256, 'parallax', 1);
+    this.parallax2 = this.add.tileSprite(128, 96, 256, 256, 'parallax', 1);
     this.parallax2.setScrollFactor(0.6, 0.6);
     this.parallax2.setDepth(-2);
 
-    this.parallax3 = this.add.tileSprite(128, 128, 256, 256, 'parallax', 2);
+    this.parallax3 = this.add.tileSprite(128, 96, 256, 256, 'parallax', 2);
     this.parallax3.setScrollFactor(0.4, 0.4);
     this.parallax3.setDepth(-3);
   }
