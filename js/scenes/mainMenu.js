@@ -15,30 +15,19 @@ class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
   create() {
     this.mainlogo = this.add.image(128, 96, 'mainlogo');
-
-    WebFont.load({
-      google: {
-        families: ['Freckle Face', 'Finger Paint', 'Nosifer', 'Creepster'],
-      },
-      active() {
-        this.add
-          .text(90, 150, 'Press start', {
-            fontFamily: 'Creepster',
-            fontSize: 16,
-            color: '#da0050',
-          })
-          .setShadow(2, 2, '#601203', 2, false, true);
-        this.add.text(
-          250,
-          450,
-          'Waves flung themselves\nat the blue evening.',
-          {
-            fontFamily: 'Finger Paint',
-            fontSize: 40,
-            color: '#5656ee',
-          },
-        );
-      },
+    const startText = this.add.text(90, 150, 'PRESS START', {
+      fontFamily: 'Arial Black',
+      fontSize: 10,
+      color: '#fff',
+      stroke: '#da0050',
+      strokeThickness: 4,
+    });
+    this.tweens.add({
+      targets: startText,
+      alpha: 0.3,
+      duration: 1000,
+      yoyo: true,
+      repeat: -1,
     });
     this.input.keyboard.on(
       'keydown_SPACE',

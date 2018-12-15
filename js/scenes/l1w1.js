@@ -6,89 +6,10 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
   // init(data) {}
 
-  // preload() {}
-
-  create() {
-    this.isPlayerDead = false;
-
-    // load the map
-    const map = this.make.tilemap({
-      key: 'l1w1',
-    });
-
-    // tiles for the ground layer
-    const groundTiles = map.addTilesetImage('grassland');
-    const backgroundTiles = map.addTilesetImage('background');
-
-    // create the ground layer
-    this.groundLayer = map.createDynamicLayer(
-      'Ground Layer',
-      groundTiles,
-      0,
-      0,
-    );
-
-    // create the ground layer
-    this.backgroundLayer = map.createDynamicLayer(
-      'Background Layer',
-      backgroundTiles,
-      0,
-      0,
-    );
-    const deadlyLayer = map.createDynamicLayer(
-      'Deadly Layer',
-      groundTiles,
-      0,
-      0,
-    );
-
-    // the player will collide with this layer
-    this.groundLayer.setCollisionByProperty({
-      collides: true,
-    });
-
-    // set the boundaries of our game world
-    this.physics.world.bounds.width = this.groundLayer.width;
-    this.physics.world.bounds.height = this.groundLayer.height;
-
-    /**
-     * Create Player
-     */
-    // create the player sprite at the spawnpoint
-    const spawnPoint = map.findObject(
-      'Objects',
-      obj => obj.name === 'Spawn Point',
-    );
-    this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player');
-
-    this.player.setBounce(0.15); // our player will bounce from items
-    this.player.setCollideWorldBounds(true); // don't go out of the map
-
-    // Make player collide with the world
-    this.physics.add.collider(this.groundLayer, this.player);
-
-    /**
-     * CONTROLS
-     */
-    // Add arrowkeys
-    this.cursors = this.input.keyboard.createCursorKeys();
-
-    /**
-     * CAMERA
-     */
-    // set bounds so the camera won't go outside the game world¨
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    // make the camera follow the player
-    this.cameras.main.startFollow(this.player);
-
-    // set background color, so the sky is not black
-    this.cameras.main.setBackgroundColor('#161c2a');
-
+  preload() {
     /**
      * ANIMATIONS
      */
-
     // Create walking animation
     this.anims.create({
       key: 'walk',
@@ -130,6 +51,89 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       repeat: -1,
     });
 
+    this.anims.create({
+      key: 'baseball',
+      frames: this.anims.generateFrameNumbers('bullets', {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
+  }
+
+  killPlayer() {
+    console.log('splat');
+    this.isPlayerDead = true;
+  }
+
+  create() {
+    this.isPlayerDead = false;
+
+    // load the map
+    const map = this.make.tilemap({
+      key: 'l1w1',
+    });
+
+    // tiles for the ground layer
+    const groundTiles = map.addTilesetImage('grassland');
+
+    const backgroundTiles = map.addTilesetImage('grassland');
+
+    // create the ground layer
+    this.groundLayer = map.createStaticLayer(
+      'Ground Layer',
+      groundTiles,
+      0,
+      0,
+    );
+
+    // create the backgroundground layer
+    this.backgroundLayer = map.createStaticLayer(
+      'Background Layer',
+      backgroundTiles,
+      0,
+      0,
+    );
+
+    // Create foreground layer
+    this.foreground = map.createStaticLayer(
+      'Foreground Layer',
+      groundTiles,
+      0,
+      0,
+    );
+
+    this.foreground.setDepth(10);
+
+    const deadlyTiles = this.foreground.getTilesWithin() // all tiles
+      .filter(tile => tile.properties.deadly).map(x => x.index);
+    const deadlyTilesId = [...(new Set(deadlyTiles))];
+
+    this.foreground.setTileIndexCallback(deadlyTilesId, this.killPlayer, this);
+
+    // the player will collide with this layer
+    this.groundLayer.setCollisionByProperty({
+      collides: true,
+    });
+
+    // set the boundaries of our game world
+    this.physics.world.bounds.width = this.groundLayer.width;
+    this.physics.world.bounds.height = this.groundLayer.height;
+
+    /**
+     * Create Player
+     */
+    // create the player sprite at the spawnpoint
+    const spawnPoint = map.findObject(
+      'Objects',
+      obj => obj.name === 'Spawn Point',
+    );
+    this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player');
+
+    this.player.setBounce(0.15); // our player will bounce from items
+    this.player.setCollideWorldBounds(true); // don't go out of the map
+
     /**
      * CREATE MONSTER
      */
@@ -147,7 +151,46 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       enemy.body.velocity.x = 0;
       enemy.anims.play('walk_monster', true);
     }, this);
+
+
+    /**
+     * Create bullets
+     */
+    this.bullets = this.physics.add.group();
+    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    /**
+     * CONTROLS
+     */
+    // Add arrowkeys
+    this.cursors = this.input.keyboard.createCursorKeys();
+
+    /**
+     * CAMERA
+     */
+    // set bounds so the camera won't go outside the game world¨
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+    // make the camera follow the player
+    this.cameras.main.startFollow(this.player);
+
+    // set background color, so the sky is not black
+    this.cameras.main.setBackgroundColor('#161c2a');
+
+    /**
+     * Check collisions
+     */
+    // Make player collide with the world
+    this.physics.add.collider(this.groundLayer, this.player);
+
+    // Make monsters collide with world
     this.physics.add.collider(this.groundLayer, this.monsters);
+
+    // Check overlap with Deadly tiles
+    this.physics.add.overlap(this.player, this.foreground);
+
+    // check overlap with monsters
+    this.physics.add.overlap(this.player, this.monsters, this.killPlayer, null, this);
   }
 
   update() {
@@ -187,6 +230,10 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       this.flipFlop = false;
     }
 
+    if (this.spaceKey.isDown) {
+
+    }
+
     /**
      * Monster activation
      */
@@ -208,19 +255,13 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     /**
      * DEATH
      */
-    if (
-      this.player.y + this.player.height > this.groundLayer.height
-      || this.physics.world.overlap(this.player, this.monsters)
-    ) {
-      this.isPlayerDead = true;
-    }
 
     if (this.isPlayerDead === true) {
       const cam = this.cameras.main;
       cam.shake(25, 0.02);
       cam.fade(250, 0, 0, 0);
       cam.once('camerafadeoutcomplete', () => {
-        this.player.destroy();
+        // this.player.destroy();
         this.scene.restart();
 
         // this.player.anims.play("idle", true);
