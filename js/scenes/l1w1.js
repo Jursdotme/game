@@ -219,19 +219,25 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     }
 
     if (this.cursors.up.isDown && this.player.body.onFloor()) {
-      if (!this.flipFlop) {
+      if (!this.flipFlopJump) {
         this.player.body.setVelocityY(-260); // jump up
-        this.flipFlop = true;
+        this.flipFlopJump = true;
         this.player.anims.play('jumping', false);
       }
     }
 
     if (this.cursors.up.isUp) {
-      this.flipFlop = false;
+      this.flipFlopJump = false;
+    }
+    if (this.spaceKey.isUp) {
+      this.flipFlopShoot = false;
     }
 
     if (this.spaceKey.isDown) {
-
+      if (!this.flipFlopShoot) {
+        console.log('BANG!');
+        this.flipFlopShoot = true;
+      }
     }
 
     /**
