@@ -55,7 +55,25 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       key: 'baseball',
       frames: this.anims.generateFrameNumbers('bullets', {
         start: 0,
-        end: 4,
+        end: 3,
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: 'basketball',
+      frames: this.anims.generateFrameNumbers('bullets', {
+        start: 4,
+        end: 7,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: 'bowlingball',
+      frames: this.anims.generateFrameNumbers('bullets', {
+        start: 8,
+        end: 11,
       }),
       frameRate: 12,
       repeat: -1,
@@ -63,9 +81,13 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
   }
 
   killPlayer() {
-    console.log('splat');
     this.isPlayerDead = true;
   }
+
+  killMonster() {
+    console.log('monster is hit');
+  }
+
 
   create() {
     this.isPlayerDead = false;
@@ -130,6 +152,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       obj => obj.name === 'Spawn Point',
     );
     this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player');
+    this.player.weapon = 'baseball';
 
     this.player.setBounce(0.15); // our player will bounce from items
     this.player.setCollideWorldBounds(true); // don't go out of the map
@@ -152,18 +175,20 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       enemy.anims.play('walk_monster', true);
     }, this);
 
-
     /**
      * Create bullets
      */
-    this.bullets = this.physics.add.group();
-    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.bullets = this.physics.add.group({ allowGravity: false });
+    this.bullets.maxSize = -1;
 
     /**
      * CONTROLS
      */
     // Add arrowkeys
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    // Add spacebar
+    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     /**
      * CAMERA
@@ -183,6 +208,9 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     // Make player collide with the world
     this.physics.add.collider(this.groundLayer, this.player);
 
+    // Kill bullets on world collide
+    this.physics.add.collider(this.groundLayer, this.bullets);
+
     // Make monsters collide with world
     this.physics.add.collider(this.groundLayer, this.monsters);
 
@@ -191,7 +219,22 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
     // check overlap with monsters
     this.physics.add.overlap(this.player, this.monsters, this.killPlayer, null, this);
+
+    // Shoot monster
+    this.physics.add.collider(this.bullets, this.monsters, this.killMonster, null, this);
   }
+
+  shootBullet() {
+    const bullet = this.bullets.getFirstDead(true, this.player.x, this.player.y, 'bullets', 0);
+    bullet.setActive(true).setVisible(true);
+    this.bullets.playAnimation(this.player.weapon);
+    if (this.player.flipX === false) {
+      bullet.setVelocityX(300);
+    } else {
+      bullet.setVelocityX(-300);
+    }
+  }
+
 
   update() {
     /**
@@ -235,8 +278,8 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
     if (this.spaceKey.isDown) {
       if (!this.flipFlopShoot) {
-        console.log('BANG!');
         this.flipFlopShoot = true;
+        this.shootBullet();
       }
     }
 
@@ -255,6 +298,26 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
         && enemy.body.velocity.x === 0
       ) {
         enemy.body.velocity.x = -40;
+      }
+    }, this);
+
+    /**
+     * Bullet recycler
+     */
+
+    this.bullets.getChildren().forEach(function (bullet) {
+      if (
+        Phaser.Math.Distance.Between(
+          this.player.x,
+          this.player.y,
+          bullet.x,
+          bullet.y,
+        ) > 300
+        || bullet.body.velocity.x === 0
+      ) {
+        bullet.setActive(false).setVisible(false);
+
+        // console.log(bullet);
       }
     }, this);
 

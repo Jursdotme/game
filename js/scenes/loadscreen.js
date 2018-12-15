@@ -24,8 +24,8 @@ class loadscreen extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
     // Load Projectiles
     this.load.spritesheet('bullets', 'assets/projectiles.png', {
-      frameWidth: 16,
-      frameHeight: 16,
+      frameWidth: 8,
+      frameHeight: 8,
       spacing: 1,
       margin: 1,
     });
