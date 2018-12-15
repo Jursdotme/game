@@ -199,8 +199,6 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     // make the camera follow the player
     this.cameras.main.startFollow(this.player);
 
-    // set background color, so the sky is not black
-    this.cameras.main.setBackgroundColor('#161c2a');
 
     /**
      * Check collisions
@@ -222,6 +220,25 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
     // Shoot monster
     this.physics.add.collider(this.bullets, this.monsters, this.killMonster, null, this);
+
+
+    /**
+     * Parallax Background
+     */
+    // set background color, so the sky is not black
+    this.cameras.main.setBackgroundColor('#373f7b');
+    this.parallax1 = this.add.tileSprite(0, 128, map.widthInPixels * 1.8, map.heightInPixels, 'parallax', 0);
+    this.parallax1.setScrollFactor(0.8, 0.8);
+    this.parallax1.setDepth(-1);
+
+    this.parallax2 = this.add.tileSprite(0, 128, map.widthInPixels * 1.6, map.heightInPixels, 'parallax', 1);
+    this.parallax2.setScrollFactor(0.6, 0.6);
+    this.parallax2.setDepth(-2);
+
+    this.parallax3 = this.add.tileSprite(0, 128, map.widthInPixels * 1.4, map.heightInPixels, 'parallax', 2);
+    this.parallax3.setScrollFactor(0.4, 0.4);
+    this.parallax3.setDepth(-3);
+    console.log(map);
   }
 
   shootBullet() {

@@ -52,10 +52,10 @@ class loadscreen extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
     this.load.image('mainlogo', 'assets/full-logo.png');
 
-    this.load.script(
-      'webfont',
-      'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
-    );
+    this.load.spritesheet('parallax', 'assets/background-parallax.png', {
+      frameWidth: 256,
+      frameHeight: 256,
+    });
   }
 
   create() {
