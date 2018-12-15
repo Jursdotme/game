@@ -4,7 +4,7 @@ class loadscreen extends Phaser.Scene { // eslint-disable-line no-unused-vars
     super({ key: 'loadscreen' });
   }
 
-  init() { }
+  // init() { }
 
   preload() {
     // map made with Tiled in JSON format

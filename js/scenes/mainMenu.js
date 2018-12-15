@@ -14,7 +14,9 @@ class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
   }
 
   create() {
-    this.mainlogo = this.add.image(128, 96, 'mainlogo');
+    this.mainlogo = this.add.image(128, -50, 'mainlogo');
+    this.mainlogo.scaleX = 0.5;
+    this.mainlogo.scaleY = 0.5;
     const startText = this.add.text(90, 150, 'PRESS START', {
       fontFamily: 'Arial Black',
       fontSize: 10,
@@ -22,12 +24,38 @@ class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
       stroke: '#da0050',
       strokeThickness: 4,
     });
+
+    startText.alpha = 0;
+    this.tweens.add({
+      targets: this.mainlogo,
+      y: 106,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 1000,
+      delay: 1000,
+      ease: 'Power1',
+    });
+    this.tweens.add({
+      targets: this.mainlogo,
+      y: 96,
+      duration: 2000,
+      yoyo: true,
+      repeat: -1,
+      delay: 2000,
+    });
+    this.tweens.add({
+      targets: startText,
+      alpha: 1,
+      duration: 1000,
+      delay: 3000,
+    });
     this.tweens.add({
       targets: startText,
       alpha: 0.3,
       duration: 1000,
       yoyo: true,
       repeat: -1,
+      delay: 4000,
     });
     this.input.keyboard.on(
       'keydown_SPACE',
@@ -49,14 +77,6 @@ class MainMenu extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.parallax3 = this.add.tileSprite(128, 96, 256, 256, 'parallax', 2);
     this.parallax3.setScrollFactor(0.4, 0.4);
     this.parallax3.setDepth(-3);
-    const tween = this.tweens.addCounter({
-      from: 1,
-      to: 2,
-      duration: 5000,
-      ease: 'Sine.easeInOut',
-      yoyo: true,
-      repeat: -1,
-    });
   }
 
   update() {
