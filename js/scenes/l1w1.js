@@ -219,14 +219,14 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.physics.add.overlap(this.player, this.monsters, this.killPlayer, null, this);
 
     // Shoot monster
-    this.physics.add.collider(this.bullets, this.monsters, this.killMonster, null, this);
+    this.physics.add.overlap(this.bullets, this.monsters, this.killMonster, null, this);
 
 
     /**
      * Parallax Background
      */
     // set background color, so the sky is not black
-    this.cameras.main.setBackgroundColor('#373f7b');
+    this.cameras.main.setBackgroundColor('#364c3a');
     this.parallax1 = this.add.tileSprite(0, 128, map.widthInPixels * 1.8, map.heightInPixels, 'parallax', 0);
     this.parallax1.setScrollFactor(0.8, 0.8);
     this.parallax1.setDepth(-1);
