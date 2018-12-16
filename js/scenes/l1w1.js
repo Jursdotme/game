@@ -307,7 +307,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
         name: 'baseball', damage: 1, velocityX: 300, velosityY: 0, bounce: 0, gravity: false,
       },
       {
-        name: 'basketball', damage: 2, velocityX: 200, velosityY: -150, bounce: 0.8, gravity: true,
+        name: 'basketball', damage: 2, velocityX: 150, velosityY: -150, bounce: 0.8, gravity: true,
       },
       {
         name: 'bowlingball', damage: 3, velocityX: 100, velosityY: 0, bounce: 0, gravity: true,
