@@ -42,13 +42,23 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     });
 
     this.anims.create({
-      key: 'walk_monster',
+      key: 'walk_blob',
       frames: this.anims.generateFrameNumbers('monster', {
         start: 0,
         end: 7,
       }),
       frameRate: 12,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: 'death_blob',
+      frames: this.anims.generateFrameNumbers('monster', {
+        start: 8,
+        end: 15,
+      }),
+      frameRate: 20,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -86,41 +96,40 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
   damageEnemy(bullet, enemy) {
     enemy.setTintFill('0xffffff');
-    enemy.health--;
+    enemy.health -= 1;
     if (enemy.health < 1) {
-      this.enemies.remove(enemy, false, true);
-      enemy.destroy(); // Remove forever
+      enemy.body.setAllowGravity(false).setVelocity(0, 0);
+      this.enemies.remove(enemy, false, false);
+      enemy.anims.play('death_blob', false);
+      enemy.on('animationcomplete', () => {
+        enemy.destroy(); // Remove forever
+      }, this);
     }
 
     bullet.setActive(false).setVisible(false); // Put back in pool
     bullet.y = -200;
 
-    const p = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        enemy.clearTint();
-      }, 20);
-    });
+    setTimeout(() => {
+      enemy.clearTint();
+    }, 30);
   }
 
   killEnemy(bullet, enemy) {
-    console.log(enemy);
     this.enemies.remove(enemy, false, true);
     enemy.destroy(); // Remove forever
+  }
+
+  destroyBullet(bullet) {
     bullet.setActive(false).setVisible(false); // Put back in pool
     bullet.y = -200;
   }
 
   isEnemyDead(enemy) {
     if (enemy.active === true) {
-      console.log('Enemy is alive');
       return true;
     }
-    console.log('Enemy is dead');
     return false;
   }
-
-  //     this.physics.add.overlap(this.bullets, this.enemies, this.killEnemy, null, this);
-
 
   create() {
     this.isPlayerDead = false;
@@ -204,7 +213,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       enemy.body.setBounceX(1);
       enemy.body.setCollideWorldBounds(true);
       enemy.body.velocity.x = 0;
-      enemy.anims.play('walk_monster', true);
+      enemy.anims.play('walk_blob', true);
       enemy.health = 3;
     }, this);
 
