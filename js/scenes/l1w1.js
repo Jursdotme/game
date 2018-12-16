@@ -42,6 +42,16 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     });
 
     this.anims.create({
+      key: 'shooting',
+      frames: this.anims.generateFrameNumbers('player', {
+        start: 13,
+        end: 13,
+      }),
+      frameRate: 12,
+      repeat: 10,
+    });
+
+    this.anims.create({
       key: 'walk_blob',
       frames: this.anims.generateFrameNumbers('monster', {
         start: 0,
@@ -335,6 +345,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     }
 
     if (this.spaceKey.isDown) {
+      this.player.anims.play('shooting', false);
       if (!this.flipFlopShoot) {
         this.flipFlopShoot = true;
         this.shootBullet();
