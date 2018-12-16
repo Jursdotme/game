@@ -100,13 +100,17 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     });
   }
 
+  setWeapon(weapon) {
+    this.player.weapon = weapon;
+  }
+
   killPlayer() {
     this.isPlayerDead = true;
   }
 
   damageEnemy(bullet, enemy) {
     enemy.setTintFill('0xffffff');
-    enemy.health -= 1;
+    enemy.health -= bullet.damage;
     if (enemy.health < 1) {
       enemy.body.setAllowGravity(false).setVelocity(0, 0);
       this.enemies.remove(enemy, false, false);
@@ -242,6 +246,10 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     // Add spacebar
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+    this.keyOne = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+    this.keyTwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+    this.keyThree = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+
     /**
      * CAMERA
      */
@@ -290,17 +298,42 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
     this.parallax3 = this.add.tileSprite(0, 128, map.widthInPixels * 1.4, map.heightInPixels, 'parallax', 2);
     this.parallax3.setScrollFactor(0.4, 0.4);
     this.parallax3.setDepth(-3);
+
+    /**
+     * Set weapon config
+     */
+    this.weapons = [
+      {
+        name: 'baseball', damage: 1, velocityX: 300, velosityY: 0, bounce: 0, gravity: false,
+      },
+      {
+        name: 'basketball', damage: 2, velocityX: 200, velosityY: -150, bounce: 0.8, gravity: true,
+      },
+      {
+        name: 'bowlingball', damage: 3, velocityX: 100, velosityY: 0, bounce: 0, gravity: true,
+      },
+    ];
   }
 
   shootBullet() {
     const bullet = this.bullets.getFirstDead(true, this.player.x, this.player.y, 'bullets', 0);
     bullet.setActive(true).setVisible(true);
-    this.bullets.playAnimation(this.player.weapon);
-    if (this.player.flipX === false) {
-      bullet.setVelocityX(300);
-    } else {
-      bullet.setVelocityX(-300);
+
+    const activeWeapon = this.player.weapon;
+    bullet.play(activeWeapon);
+    const activeWeaponObj = this.weapons.find(weapon => weapon.name === activeWeapon);
+    bullet.damage = activeWeaponObj.damage;
+    let activeWeaponVelocityX = activeWeaponObj.velocityX;
+
+    // Check player direction
+    if (this.player.flipX !== false) {
+      console.log('Hello');
+      activeWeaponVelocityX = -activeWeaponObj.velocityX;
     }
+    bullet.body
+      .setAllowGravity(activeWeaponObj.gravity)
+      .setVelocity(activeWeaponVelocityX, activeWeaponObj.velosityY)
+      .setBounceY(activeWeaponObj.bounce);
   }
 
 
@@ -350,6 +383,18 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
         this.flipFlopShoot = true;
         this.shootBullet();
       }
+    }
+
+    if (this.keyOne.isDown) {
+      this.setWeapon('baseball');
+    }
+
+    if (this.keyTwo.isDown) {
+      this.setWeapon('basketball');
+    }
+
+    if (this.keyThree.isDown) {
+      this.setWeapon('bowlingball');
     }
 
     /**
