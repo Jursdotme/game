@@ -94,6 +94,12 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
 
     bullet.setActive(false).setVisible(false); // Put back in pool
     bullet.y = -200;
+
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        enemy.clearTint();
+      }, 20);
+    });
   }
 
   killEnemy(bullet, enemy) {
@@ -206,7 +212,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
      * Create bullets
      */
     this.bullets = this.physics.add.group({ allowGravity: false });
-    this.bullets.maxSize = 3;
+    this.bullets.maxSize = 5;
 
     /**
      * CONTROLS
@@ -288,17 +294,17 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
       this.player.body.setVelocityX(-80); // move left
       if (this.player.body.onFloor()) {
         this.player.anims.play('walk', true); // play walk animation
-        this.player.flipX = true; // flip the sprite to the left
         this.player.direction = -1;
       }
+      this.player.flipX = true; // flip the sprite to the left
     } else if (this.cursors.right.isDown) {
       // if the right arrow key is down
       this.player.body.setVelocityX(80); // move right
       if (this.player.body.onFloor()) {
         this.player.anims.play('walk', true); // play walk animation
-        this.player.flipX = false; // use the original sprite looking to the right
         this.player.direction = 1;
       }
+      this.player.flipX = false; // use the original sprite looking to the right
     } else if (this.player.body.onFloor()) {
       this.player.body.setVelocityX(0);
       this.player.anims.play('idle', true);
@@ -355,7 +361,7 @@ class l1w1 extends Phaser.Scene { // eslint-disable-line no-unused-vars
           this.player.y,
           bullet.x,
           bullet.y,
-        ) > 300
+        ) > 256
         || bullet.body.velocity.x === 0
       ) {
         bullet.setActive(false).setVisible(false);
